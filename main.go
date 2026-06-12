@@ -30,14 +30,14 @@ func main() {
 	addr := fmt.Sprintf("%s:%s", redisHost, redisPort)
 
 	// Build Redis client
+
 	opts := &redis.Options{
-		Addr:         addr,
-		Password:     redisAuth, // empty string = no auth
-		DB:           0,
-		DialTimeout:  5 * time.Second,
-		ReadTimeout:  3 * time.Second,
-		WriteTimeout: 3 * time.Second,
-	}
+    Addr: addr,
+    Password: redisAuth,
+    TLSConfig: &tls.Config{
+        MinVersion: tls.VersionTLS12,
+    },
+}
 
 	rdb = redis.NewClient(opts)
 
